@@ -48,20 +48,21 @@ var S = (function(){
 })()
 
 $(function(){
-  $("div.sound").each(function(){
+  $("a.sound").each(function(){
     var activeBackground = $("<div class=\"active\"></div>");
     $(this).append(activeBackground);
 
     var sound = S.randomSound();
     $(this).hover(function(){
       sound.play();
-      activeBackground.stop().fadeIn();
+      activeBackground.stop().fadeIn(100);
     }, function(){
       sound.pause();
-      activeBackground.stop().fadeOut();
+      activeBackground.stop().fadeOut(100);
     });
-    $(this).click(function(){
-      sound.pause();
+    var downloadButton = $("<button>Download</button>");
+    $(this).append(downloadButton);
+    downloadButton.click(function(){
       sound.save();
     });
   });

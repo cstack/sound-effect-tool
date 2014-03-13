@@ -1,18 +1,25 @@
-div#sounds {
+#sounds {
   margin: 20px;
+  float: left;
 }
 
-div.sound {
+a.sound {
   width: 100px;
   height: 100px;
   background-color: red;
   float: left;
   margin: 10px;
+  position: relative;
 }
 
-div.sound div.active {
+a.sound div.active {
   width: 100%;
   height: 100%;
   background-color: green;
   display: none;
+}
+
+a.sound button {
+  position: absolute;
+  bottom: 0px;
 }
