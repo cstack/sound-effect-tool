@@ -1,0 +1,18 @@
+div#sounds {
+  margin: 20px;
+}
+
+div.sound {
+  width: 100px;
+  height: 100px;
+  background-color: red;
+  float: left;
+  margin: 10px;
+}
+
+div.sound div.active {
+  width: 100%;
+  height: 100%;
+  background-color: green;
+  display: none;
+}
