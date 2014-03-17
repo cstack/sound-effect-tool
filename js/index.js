@@ -56,11 +56,11 @@ var Sound = function(seedSound) {
       table.push([freq, time]);
     }
 
-    if (Math.random() < 0.2) {
-      table.push(randomFreqTable());
+    if (Math.random() < 0.3) {
+      table.push(randomFreqTransition());
     }
 
-    if (Math.random() < 0.2 && table.length > 1) {
+    if (Math.random() < 0.3 && table.length > 1) {
       table.pop(1);
     }
 
@@ -77,7 +77,7 @@ var Sound = function(seedSound) {
     // Create a mutated version of the seed sound
 
     this.freqTable = mutateFreqTable(seedSound.freqTable);
-    if (Math.random() < 0.2) {
+    if (Math.random() < 0.3) {
       this.waveform = randomWaveform();
     } else {
       this.waveform = seedSound.waveform;
@@ -130,35 +130,48 @@ var Sound = function(seedSound) {
   }
 }
 
-var S = (function(){
-  var api = {
-    randomSound: function() {
-      return new Sound();
-    }
-  };
-  return api;
-})()
+var Tile = function(sound) {
+  this.ui = $("<a href=\"#\" class=\"sound\"></a>");
+  this.sound = sound;
+
+  var activeBackground = $("<div class=\"active\"></div>");
+  this.ui.append(activeBackground);
+
+  this.ui.hover(function(){
+    sound.play();
+    activeBackground.stop().fadeIn(100);
+  }, function(){
+    activeBackground.stop().fadeOut(100);
+  });
+
+  var downloadButton = $("<a href=\#\ class=\"glyphicon glyphicon-download download\"></a>");
+
+  this.ui.append(downloadButton);
+  downloadButton.click(function(){
+    sound.save();
+  });
+
+  this.ui.click(function(){
+    sound = new Sound(sound);
+  });
+}
+
+var Row = function(seedSound) {
+  var ui = $("<div class=\"row\"></div>");
+  this.ui = ui;
+  for (var i = 0; i < 5; i++) {
+    (function(){
+      var tile = new Tile(new Sound(seedSound));
+      tile.ui.click(function(){
+        $(this).addClass("selected");
+        ui.after(new Row(tile.sound).ui);
+      });
+      ui.append(tile.ui);
+    })()
+  }
+}
 
 $(function(){
-  $("a.sound").each(function(){
-    var activeBackground = $("<div class=\"active\"></div>");
-    $(this).append(activeBackground);
-
-    var sound = S.randomSound();
-    $(this).hover(function(){
-      sound.play();
-      activeBackground.stop().fadeIn(100);
-    }, function(){
-      activeBackground.stop().fadeOut(100);
-    });
-    var downloadButton = $("<a href=\#\ class=\"glyphicon glyphicon-download download\"></a>");
-    $(this).append(downloadButton);
-    downloadButton.click(function(){
-      sound.save();
-    });
-
-    $(this).click(function(){
-      sound = new Sound(sound);
-    });
-  });
+  var soundsUI = $("#sounds");
+  soundsUI.append(new Row().ui);
 });
