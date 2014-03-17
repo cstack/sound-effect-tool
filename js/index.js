@@ -119,7 +119,7 @@ var Sound = function(seedSound) {
         rec.stop();
           rec.exportWAV(function(blob) {
           console.log(blob);
-          saveAs(blob, "test.wav");
+          saveAs(blob, "sound.wav");
         });
       }, 200); // Extra time at end of track
     });
