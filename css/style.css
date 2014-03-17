@@ -19,7 +19,7 @@ a.sound div.active {
   display: none;
 }
 
-a.sound button {
+a.sound .glyphicon {
   position: absolute;
-  bottom: 0px;
+  padding: 5px;
 }
