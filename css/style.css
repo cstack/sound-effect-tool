@@ -3,6 +3,12 @@
   float: left;
 }
 
+#instructions {
+  margin: 20px;
+  width: 200px;
+  float: left;
+}
+
 a.sound {
   width: 100px;
   height: 100px;
